@@ -1,26 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LuckyTickets
 {
     class LuckyTicket
     {
-        private bool checkNumberSimpleMethod(int num)
+        public uint Max { get; set; }
+        public uint Min { get; set; }
+
+        public LuckyTicket(uint max, uint min)
         {
-            int[] arr = getArr(num);
+            this.Max = max;
+            this.Min = min;
+        }
+
+        private bool CheckNumberSimpleMethod(uint num)
+        {
+            uint[] arr = GetArray(num);
+
             return ((arr[0] + arr[1] + arr[2]) == (arr[3] + arr[4] + arr[5]));
         }
-        private bool checkNumberHardMethod(int num)
+        private bool CheckNumberHardMethod(uint num)
         {
-            int[] arr = getArr(num);
+            uint[] arr = GetArray(num);
+
             return ((arr[0] + arr[2] + arr[4]) == (arr[1] + arr[3] + arr[5]));
         }
-        private int[] getArr(int num)
+        private uint[] GetArray(uint num)
         {
-            int[] i = new int[6];
+            uint[] i = new uint[6];
+
             i[0] = (num / 100000) % 10;
             i[1] = (num / 10000) % 10;
             i[2] = (num / 1000) % 10;
@@ -30,37 +38,50 @@ namespace LuckyTickets
 
             return i;
         }
-        public int countLTSimpleMethod(int min, int max)
+        public uint CountLTSimpleMethod()
         {
-            int countSimple = 0;
-            for (int i = min; i <= max; i++)
+            uint countSimple = 0;
+
+            for (uint i = Min; i <= Max; i++)
             {
-                if (checkNumberSimpleMethod(i))
+                if (CheckNumberSimpleMethod(i))
+                {
                     countSimple++;
+                }
             }
+
             return countSimple;
         }
-        public int countLTHardMethod(int min, int max)
+        public uint CountLTHardMethod()
         {
-            int countSimple = 0;
-            for (int i = min; i <= max; i++)
+            uint countSimple = 0;
+            for (uint i = Min; i <= Max; i++)
             {
-                if (checkNumberHardMethod(i))
+                if (CheckNumberHardMethod(i))
+                {
                     countSimple++;
+                }
             }
+
             return countSimple;
         }
-        public void printResult(int simpleCount, int hardCount)
+        public void PrintResult(uint simpleCount, uint hardCount)
         {
             if (simpleCount < hardCount)
+            {
                 Console.WriteLine("Сложный способ победил");
+            }
             else if (simpleCount > hardCount)
+            {
                 Console.WriteLine("Легкий способ победил");
+            }
             else
+            {
                 Console.WriteLine("Оба способа хороши");
-
-            Console.WriteLine("Легкий способ: " + simpleCount);
-            Console.WriteLine("Сложный способ: " + hardCount);
+            }
+                
+            Console.WriteLine($"Легкий способ: {simpleCount}");
+            Console.WriteLine($"Сложный способ: {hardCount}");
         }
     }
 }
