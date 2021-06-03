@@ -1,87 +1,73 @@
-﻿using System;
-
+﻿
 namespace LuckyTickets
 {
     class LuckyTicket
     {
-        public uint Max { get; set; }
-        public uint Min { get; set; }
+        private const uint QUANTITY_NUMBERS = 6;
+        public uint Max { get; }
+        public uint Min { get; }
 
-        public LuckyTicket(uint max, uint min)
+        public LuckyTicket(string min, string max)
         {
-            this.Max = max;
-            this.Min = min;
+            this.Min = uint.Parse(min);
+            this.Max = uint.Parse(max);
         }
 
-        private bool CheckNumberSimpleMethod(uint num)
+        private bool CheckNumberSimpleMethod(uint number)
         {
-            uint[] arr = GetArray(num);
+            uint[] num = GetArray(number);
 
-            return ((arr[0] + arr[1] + arr[2]) == (arr[3] + arr[4] + arr[5]));
+            return ((num[0] + num[1] + num[2]) == (num[3] + num[4] + num[5]));
         }
-        private bool CheckNumberHardMethod(uint num)
+        private bool CheckNumberHardMethod(uint number)
         {
-            uint[] arr = GetArray(num);
+            uint[] num = GetArray(number);
 
-            return ((arr[0] + arr[2] + arr[4]) == (arr[1] + arr[3] + arr[5]));
+            return ((num[0] + num[2] + num[4]) == (num[1] + num[3] + num[5]));
         }
-        private uint[] GetArray(uint num)
+
+        private uint[] GetArray(uint number)
         {
-            uint[] i = new uint[6];
+            uint[] num = new uint[QUANTITY_NUMBERS];
 
-            i[0] = (num / 100000) % 10;
-            i[1] = (num / 10000) % 10;
-            i[2] = (num / 1000) % 10;
-            i[3] = (num / 100) % 10;
-            i[4] = (num / 10) % 10;
-            i[5] = num % 10;
+            num[0] = (number / 100000) % 10;
+            num[1] = (number / 10000) % 10;
+            num[2] = (number / 1000) % 10;
+            num[3] = (number / 100) % 10;
+            num[4] = (number / 10) % 10;
+            num[5] = (number / 1) % 10;
 
-            return i;
+            return num;
         }
-        public uint CountLTSimpleMethod()
+
+        public uint QuantitySimpleMethod()
         {
-            uint countSimple = 0;
+            uint quantitySimpleTickets = 0;
 
             for (uint i = Min; i <= Max; i++)
             {
                 if (CheckNumberSimpleMethod(i))
                 {
-                    countSimple++;
+                    quantitySimpleTickets++;
                 }
             }
 
-            return countSimple;
+            return quantitySimpleTickets;
         }
-        public uint CountLTHardMethod()
+
+        public uint QuantityHardMethod()
         {
-            uint countSimple = 0;
+            uint quantityHardTickets = 0;
+
             for (uint i = Min; i <= Max; i++)
             {
                 if (CheckNumberHardMethod(i))
                 {
-                    countSimple++;
+                    quantityHardTickets++;
                 }
             }
 
-            return countSimple;
-        }
-        public void PrintResult(uint simpleCount, uint hardCount)
-        {
-            if (simpleCount < hardCount)
-            {
-                Console.WriteLine("Сложный способ победил");
-            }
-            else if (simpleCount > hardCount)
-            {
-                Console.WriteLine("Легкий способ победил");
-            }
-            else
-            {
-                Console.WriteLine("Оба способа хороши");
-            }
-                
-            Console.WriteLine($"Легкий способ: {simpleCount}");
-            Console.WriteLine($"Сложный способ: {hardCount}");
+            return quantityHardTickets;
         }
     }
 }

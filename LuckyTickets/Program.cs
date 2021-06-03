@@ -9,8 +9,8 @@ namespace LuckyTickets
             ConsoleController consoleController = new ConsoleController(args);
             consoleController.Start();
 
-            Console.WriteLine("Програма завершена");
-            Console.ReadLine();
+            Console.WriteLine("Программа завершена");
+            Console.ReadKey();
         }
     }
 }

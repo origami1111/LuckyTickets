@@ -10,11 +10,12 @@ namespace LuckyTickets
         {
             this.args = args;
         }
+
         public void Start()
         {
             view = new View();
             view.CheckArguments(args);
-            view.FillData();
+            view.SetInterval();
             view.PrintResult();
         }
     }
