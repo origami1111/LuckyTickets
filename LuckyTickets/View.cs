@@ -51,8 +51,10 @@ namespace LuckyTickets
 
         public void PrintResult()
         {
-            uint quantitySimpleMethod = luckyTicket.QuantitySimpleMethod();
-            uint quantityHardMethod = luckyTicket.QuantityHardMethod();
+            luckyTicket.checkNumberHandler += luckyTicket.CheckNumberSimpleMethod;
+            uint quantitySimpleMethod = luckyTicket.QuantityByMethod();
+            luckyTicket.checkNumberHandler += luckyTicket.CheckNumberHardMethod;
+            uint quantityHardMethod = luckyTicket.QuantityByMethod();
 
             Console.WriteLine("===========================================================================================");
             Console.WriteLine("Информация о победившем методе и количестве счастливых билетов для каждого способа подсчета");

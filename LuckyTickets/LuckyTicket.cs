@@ -4,8 +4,11 @@ namespace LuckyTickets
     class LuckyTicket
     {
         private const uint QUANTITY_NUMBERS = 6;
+        public delegate bool CheckNumberHandler(uint number);
+        public CheckNumberHandler checkNumberHandler { get; set; }
         public uint Max { get; }
         public uint Min { get; }
+    
 
         public LuckyTicket(string min, string max)
         {
@@ -13,17 +16,23 @@ namespace LuckyTickets
             this.Max = uint.Parse(max);
         }
 
-        private bool CheckNumberSimpleMethod(uint number)
+        public bool CheckNumberSimpleMethod(uint number)
         {
             uint[] num = GetArray(number);
 
-            return ((num[0] + num[1] + num[2]) == (num[3] + num[4] + num[5]));
+            uint leftSide = num[0] + num[1] + num[2];
+            uint rightSde = num[3] + num[4] + num[5];
+
+            return Equals(leftSide, rightSde);
         }
-        private bool CheckNumberHardMethod(uint number)
+        public bool CheckNumberHardMethod(uint number)
         {
             uint[] num = GetArray(number);
+            
+            uint evenSum = num[0] + num[2] + num[4];
+            uint oddSum = num[1] + num[3] + num[5];
 
-            return ((num[0] + num[2] + num[4]) == (num[1] + num[3] + num[5]));
+            return Equals(oddSum, evenSum);
         }
 
         private uint[] GetArray(uint number)
@@ -40,34 +49,19 @@ namespace LuckyTickets
             return num;
         }
 
-        public uint QuantitySimpleMethod()
+        public uint QuantityByMethod()
         {
             uint quantitySimpleTickets = 0;
 
             for (uint i = Min; i <= Max; i++)
             {
-                if (CheckNumberSimpleMethod(i))
+                if (checkNumberHandler(i))
                 {
                     quantitySimpleTickets++;
                 }
             }
 
             return quantitySimpleTickets;
-        }
-
-        public uint QuantityHardMethod()
-        {
-            uint quantityHardTickets = 0;
-
-            for (uint i = Min; i <= Max; i++)
-            {
-                if (CheckNumberHardMethod(i))
-                {
-                    quantityHardTickets++;
-                }
-            }
-
-            return quantityHardTickets;
         }
     }
 }
