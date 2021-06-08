@@ -52,9 +52,9 @@ namespace LuckyTickets
         public void PrintResult()
         {
             luckyTicket.checkNumberHandler += luckyTicket.CheckNumberSimpleMethod;
-            uint quantitySimpleMethod = luckyTicket.QuantityByMethod();
+            uint quantitySimpleMethod = luckyTicket.CountingLuckyTickets();
             luckyTicket.checkNumberHandler += luckyTicket.CheckNumberHardMethod;
-            uint quantityHardMethod = luckyTicket.QuantityByMethod();
+            uint quantityHardMethod = luckyTicket.CountingLuckyTickets();
 
             Console.WriteLine("===========================================================================================");
             Console.WriteLine("Информация о победившем методе и количестве счастливых билетов для каждого способа подсчета");
@@ -88,7 +88,7 @@ namespace LuckyTickets
                 {
                     Console.Write("Введите min номер билета: ");
                     min = Console.ReadLine();
-                    if (min.Length != 6)
+                    if (min.Length > 6)
                     {
                         throw new Exception("Номер билета должен состоять из 6 цифр!");
                     }
@@ -99,7 +99,7 @@ namespace LuckyTickets
 
                     Console.Write("Введите max номер билета: ");
                     max = Console.ReadLine();
-                    if (max.Length != 6)
+                    if (max.Length > 6)
                     {
                         throw new Exception("Номер билета должен состоять из 6 цифр!");
                     }

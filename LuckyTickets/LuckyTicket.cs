@@ -1,14 +1,14 @@
-﻿
+﻿using System.Linq;
+
 namespace LuckyTickets
 {
     class LuckyTicket
     {
-        private const uint QUANTITY_NUMBERS = 6;
-        public delegate bool CheckNumberHandler(uint number);
+        public delegate bool CheckNumberHandler(string number);
         public CheckNumberHandler checkNumberHandler { get; set; }
         public uint Max { get; }
         public uint Min { get; }
-    
+
 
         public LuckyTicket(string min, string max)
         {
@@ -16,46 +16,41 @@ namespace LuckyTickets
             this.Max = uint.Parse(max);
         }
 
-        public bool CheckNumberSimpleMethod(uint number)
+        public bool CheckNumberSimpleMethod(string number)
         {
-            uint[] num = GetArray(number);
+            char[] num = GetArray(number);
 
-            uint leftSide = num[0] + num[1] + num[2];
-            uint rightSde = num[3] + num[4] + num[5];
+            uint leftSide = (uint)(num[0] + num[1] + num[2]);
+            uint rightSde = (uint)(num[3] + num[4] + num[5]);
 
             return Equals(leftSide, rightSde);
         }
-        public bool CheckNumberHardMethod(uint number)
+        public bool CheckNumberHardMethod(string number)
         {
-            uint[] num = GetArray(number);
-            
-            uint evenSum = num[0] + num[2] + num[4];
-            uint oddSum = num[1] + num[3] + num[5];
+            char[] num = GetArray(number);
+
+            uint evenSum = (uint)(num[0] + num[2] + num[4]);
+            uint oddSum = (uint)(num[1] + num[3] + num[5]);
 
             return Equals(oddSum, evenSum);
         }
 
-        private uint[] GetArray(uint number)
+        private char[] GetArray(string number)
         {
-            uint[] num = new uint[QUANTITY_NUMBERS];
+            char[] nums = number.Select(x => (char)char.GetNumericValue(x)).ToArray();
 
-            num[0] = (number / 100000) % 10;
-            num[1] = (number / 10000) % 10;
-            num[2] = (number / 1000) % 10;
-            num[3] = (number / 100) % 10;
-            num[4] = (number / 10) % 10;
-            num[5] = (number / 1) % 10;
-
-            return num;
+            return nums;
         }
 
-        public uint QuantityByMethod()
+
+        public uint CountingLuckyTickets()
         {
             uint quantitySimpleTickets = 0;
 
             for (uint i = Min; i <= Max; i++)
             {
-                if (checkNumberHandler(i))
+
+                if (checkNumberHandler(i.ToString("000000")))
                 {
                     quantitySimpleTickets++;
                 }
